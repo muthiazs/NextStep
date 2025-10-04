@@ -1,0 +1,8 @@
+# Folder dependensi
+node_modules
+
+# File environment (isi API key, password, dll.)
+.env
+
+# Folder upload sementara (hasil dari multer)
+uploads/

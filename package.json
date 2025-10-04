@@ -1,0 +1,31 @@
+{
+  "name": "gemini-express-lab",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "type": "module",
+  "description": "ExpressJS + Gemini 1.5 Flash multimodal API integration",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "gemini",
+    "google-ai",
+    "api",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "multer": "^2.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
