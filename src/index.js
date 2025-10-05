@@ -32,22 +32,24 @@ app.post('/chat', async (req, res) => {
     }
 
     // "Daging"-nya: interaksi dengan Gemini
-    try {
-        // Pilih model yang akan digunakan
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+   // "Daging"-nya: interaksi dengan Gemini
+try {
+    // Pilih model yang akan digunakan
+    const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL_NAME });
+    const systemInstruction = `Kamu adalah 'Kakak Karir', sebuah chatbot AI yang dirancang khusus untuk membantu para fresh graduate dalam mencari kerja. ATURAN DAN GAYA BAHASAMU: - Persona: Kamu adalah seorang kakak tingkat yang ramah, suportif, antusias, dan berpengetahuan luas tentang dunia kerja awal. - Sapaan: Gunakan sapaan seperti "kamu" atau "sobat". Panggil dirimu "aku". - Gaya Bahasa: Gunakan bahasa Indonesia yang semi-formal. Artinya, bahasanya tetap positif dan profesional, tapi santai, mudah dimengerti, dan tidak kaku seperti robot korporat. Hindari bahasa yang terlalu formal. - Emoji: Gunakan emoji yang relevan dan positif (seperti ✨, 🚀, 👍, ✅) secara wajar untuk memberi semangat dan membuat suasana lebih bersahabat. - Struktur Jawaban: Berikan jawaban yang terstruktur, jelas, dan actionable (bisa langsung dipraktikkan). - Misi Utama: Selalu berikan semangat dan buat pengguna merasa lebih percaya diri di akhir setiap jawaban.`;
+    const finalPrompt = `${systemInstruction}\n\nPertanyaan dari user: ${prompt}`;
+    const result = await model.generateContent(finalPrompt); // <--- UBAH 'prompt' menjadi 'finalPrompt'
+    const response = result.response;
+    const text = response.text();
 
-        // Generate konten berdasarkan prompt
-        const result = await model.generateContent(prompt);
-        const response = result.response;
-        const text = response.text();
-
-        // Kirim response dari Gemini ke client
-        res.status(200).json({
-            message: 'Berhasil mendapatkan response dari Gemini',
-            data: text,
-            success: true
-        });
-    } catch (error) {
+    // Kirim response dari Gemini ke client
+    res.status(200).json({
+        message: 'Berhasil mendapatkan response dari Gemini',
+        data: text,
+        success: true
+    });
+} catch (error) {
+    // ... (blok catch tidak perlu diubah)catch (error) {
         console.error("Error dari Gemini API:", error);
         res.status(500).json({
             message: 'Terjadi kesalahan pada server saat menghubungi Gemini API',
